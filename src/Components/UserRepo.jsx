@@ -4,6 +4,13 @@ import { Box, Pagination, Typography } from "@mui/material";
 /* eslint-disable react/prop-types */
 const UserRepo = ({ userRepo, repoNum, changePage, page }) => {
   const theme = useTheme();
+  const propertyLabels = [
+    { label: "Repo Name", property: "full_name" },
+    { label: "Description", property: "description" },
+    { label: "Language Used", property: "language" },
+    { label: "Forks", property: "forks_count" },
+    { label: "Watchers", property: "watchers_count" },
+  ];
   return (
     <Box
       sx={{
@@ -47,19 +54,11 @@ const UserRepo = ({ userRepo, repoNum, changePage, page }) => {
               borderRadius: "8px",
             }}
           >
-            <Typography variant="body1">
-              Repo Name : {item.full_name}
-            </Typography>
-            <Typography variant="body1">
-              Description : {item.description}
-            </Typography>
-            <Typography variant="body1">
-              Language Used : {item.language}
-            </Typography>
-            <Typography variant="body1">Forks : {item.forks_count}</Typography>
-            <Typography variant="body1">
-              Watchers : {item.watchers_count}
-            </Typography>
+            {propertyLabels.map((prop, index) => (
+              <Typography key={index} variant="body1">
+                {prop.label}: {item[prop.property]}
+              </Typography>
+            ))}
           </Box>
         ))}
       </Box>

@@ -1,14 +1,20 @@
-import "./App.css";
+import { useState } from "react";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import User from "./Components/User";
 import { Toaster } from "react-hot-toast";
-import { Box } from "@mui/material";
+import { IconButton } from "@mui/material";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
-import { useState } from "react";
+
+import "./App.css";
 
 function App() {
-  const [mode, setMode] = useState("light");
+  const [mode, setMode] = useState("dark");
+
+  const toggleMode = () => {
+    setMode(mode === "light" ? "dark" : "light");
+  };
+
   const theme = createTheme({
     palette: {
       mode: mode,
@@ -19,10 +25,8 @@ function App() {
     <ThemeProvider theme={theme}>
       <Toaster position="top-right" />
       <User />
-      <Box
-        onClick={() => {
-          mode === "light" ? setMode("dark") : setMode("light");
-        }}
+      <IconButton
+        onClick={toggleMode}
         sx={{
           position: "absolute",
           top: "1rem",
@@ -35,7 +39,7 @@ function App() {
         ) : (
           <DarkModeOutlinedIcon />
         )}
-      </Box>
+      </IconButton>
     </ThemeProvider>
   );
 }

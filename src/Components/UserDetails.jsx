@@ -4,6 +4,16 @@ import { Avatar, Box, Typography } from "@mui/material";
 
 const UserDetails = ({ userDetails }) => {
   const theme = useTheme();
+  const userInformation = [
+    { label: "Username", value: userDetails.login },
+    { label: "Name", value: userDetails.name },
+    { label: "Bio", value: userDetails.bio },
+    { label: "Location", value: userDetails.location },
+    { label: "Followers", value: userDetails.followers },
+    { label: "Following", value: userDetails.following },
+    { label: "Public Repo", value: userDetails.public_repos },
+  ];
+
   return (
     <Box
       sx={{
@@ -39,21 +49,11 @@ const UserDetails = ({ userDetails }) => {
           paddingLeft: ["0", "2rem", "2rem"],
         }}
       >
-        <Typography variant="body1">Username : {userDetails.login} </Typography>
-        <Typography variant="body1"> Name : {userDetails.name} </Typography>
-        <Typography variant="body1"> Bio : {userDetails.bio} </Typography>
-        <Typography variant="body1">
-          Location : {userDetails.location}
-        </Typography>
-        <Typography variant="body1">
-          Followers : {userDetails.followers}
-        </Typography>
-        <Typography variant="body1">
-          Following : {userDetails.following}
-        </Typography>
-        <Typography variant="body1">
-          Public Repo : {userDetails.public_repos}
-        </Typography>
+        {userInformation.map((info) => (
+          <Typography key={info.label} variant="body1">
+            {info.label}: {info.value}
+          </Typography>
+        ))}
       </Box>
     </Box>
   );

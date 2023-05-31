@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -7,7 +8,6 @@ import {
   Typography,
 } from "@mui/material";
 import axios from "axios";
-import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import UserDetails from "./UserDetails";
 import UserRepo from "./UserRepo";
@@ -24,18 +24,18 @@ const User = () => {
   const getUserDetails = async () => {
     try {
       setLoading(true);
-      const profile_response = await axios.get(
-        `https://api.github.com/users/${input}`
-      );
-      const profile_repo_data = await axios.get(
-        `https://api.github.com/users/${input}/repos?page=${page}&per_page=10`
-      );
+      const [profileResponse, profileRepoData] = await Promise.all([
+        axios.get(`https://api.github.com/users/${input}`),
+        axios.get(`https://api.github.com/users/${input}/repos`, {
+          params: { page, per_page: 10 },
+        }),
+      ]);
 
-      setUserDetails(profile_response.data);
-      setUserRepo(profile_repo_data.data);
+      setUserDetails(profileResponse.data);
+      setUserRepo(profileRepoData.data);
       setLoading(false);
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data?.message || "An error occurred");
       setLoading(false);
     }
   };
@@ -43,13 +43,16 @@ const User = () => {
   const pageNavigationFunction = async () => {
     try {
       setLoading(true);
-      const profile_repo_data = await axios.get(
-        `https://api.github.com/users/${input}/repos?page=${page}&per_page=10`
+      const profileRepoData = await axios.get(
+        `https://api.github.com/users/${input}/repos`,
+        {
+          params: { page, per_page: 10 },
+        }
       );
-      setUserRepo(profile_repo_data.data);
+      setUserRepo(profileRepoData.data);
       setLoading(false);
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data?.message || "An error occurred");
       setLoading(false);
     }
   };
@@ -71,6 +74,9 @@ const User = () => {
     }
     getUserDetails();
   };
+
+  const userDetailsNotEmpty = Object.keys(userDetails).length !== 0;
+  const userRepoNotEmpty = userRepo.length !== 0;
 
   return (
     <Box
@@ -101,6 +107,7 @@ const User = () => {
         <TextField
           label="Search User"
           variant="outlined"
+          value={input}
           onChange={(e) => setInput(e.target.value)}
           sx={{
             "& .MuiOutlinedInput-notchedOutline": {
@@ -117,10 +124,10 @@ const User = () => {
           Submit
         </Button>
       </Box>
-      {Object.keys(userDetails).length !== 0 && loading === false && (
+      {userDetailsNotEmpty && !loading && (
         <UserDetails userDetails={userDetails} />
       )}
-      {userRepo.length !== 0 && loading === false && (
+      {userRepoNotEmpty && !loading && (
         <UserRepo
           userRepo={userRepo}
           repoNum={userDetails.public_repos}
