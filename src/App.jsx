@@ -1,6 +1,6 @@
 import "./App.css";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import User from "./assets/Components/User";
+import User from "./Components/User";
 import { Toaster } from "react-hot-toast";
 import { Box } from "@mui/material";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
