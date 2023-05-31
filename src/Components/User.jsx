@@ -18,12 +18,14 @@ const User = () => {
   const [userDetails, setUserDetails] = useState({});
   const [userRepo, setUserRepo] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [loadingRepo, setLoadingRepo] = useState(false);
   const [page, setPage] = useState(1);
   const theme = useTheme();
 
   const getUserDetails = async () => {
     try {
       setLoading(true);
+      setLoadingRepo(true);
       const [profileResponse, profileRepoData] = await Promise.all([
         axios.get(`https://api.github.com/users/${input}`),
         axios.get(`https://api.github.com/users/${input}/repos`, {
@@ -34,15 +36,17 @@ const User = () => {
       setUserDetails(profileResponse.data);
       setUserRepo(profileRepoData.data);
       setLoading(false);
+      setLoadingRepo(false);
     } catch (error) {
       toast.error(error.response?.data?.message || "An error occurred");
       setLoading(false);
+      setLoadingRepo(false);
     }
   };
 
   const pageNavigationFunction = async () => {
     try {
-      setLoading(true);
+      setLoadingRepo(true);
       const profileRepoData = await axios.get(
         `https://api.github.com/users/${input}/repos`,
         {
@@ -50,13 +54,14 @@ const User = () => {
         }
       );
       setUserRepo(profileRepoData.data);
-      setLoading(false);
+      setLoadingRepo(false);
     } catch (error) {
       toast.error(error.response?.data?.message || "An error occurred");
-      setLoading(false);
+      setLoadingRepo(false);
     }
   };
-
+  console.log({ loading });
+  console.log({ loadingRepo });
   const changePage = (value) => {
     setPage(value);
   };
@@ -127,7 +132,7 @@ const User = () => {
       {userDetailsNotEmpty && !loading && (
         <UserDetails userDetails={userDetails} />
       )}
-      {userRepoNotEmpty && !loading && (
+      {userRepoNotEmpty && !loadingRepo && (
         <UserRepo
           userRepo={userRepo}
           repoNum={userDetails.public_repos}
@@ -135,7 +140,7 @@ const User = () => {
           page={page}
         />
       )}
-      {loading && (
+      {(loading || loadingRepo) && (
         <Box
           sx={{
             display: "flex",
