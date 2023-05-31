@@ -24,6 +24,8 @@ This will start the development server and you will see the app running at `http
 
 To build the app for production, use the following command:`npm run build`
 
+Additionaly the site is hosted on `https://preimage-task.vercel.app/`
+
 
 
 
