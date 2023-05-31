@@ -3,7 +3,6 @@ import { Box, Pagination, Typography } from "@mui/material";
 
 /* eslint-disable react/prop-types */
 const UserRepo = ({ userRepo, repoNum, changePage, page }) => {
-  console.log(Math.ceil(repoNum / 10));
   const theme = useTheme();
   return (
     <Box
