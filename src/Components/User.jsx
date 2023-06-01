@@ -58,8 +58,6 @@ const User = () => {
       setLoadingRepo(false);
     }
   };
-  console.log({ loading });
-  console.log({ loadingRepo });
   const changePage = (value) => {
     setPage(value);
   };
