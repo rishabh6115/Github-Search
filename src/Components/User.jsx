@@ -11,7 +11,6 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 import UserDetails from "./UserDetails";
 import UserRepo from "./UserRepo";
-import { useTheme } from "@mui/material/styles";
 
 const User = () => {
   const [input, setInput] = useState("");
@@ -20,7 +19,6 @@ const User = () => {
   const [loading, setLoading] = useState(false);
   const [loadingRepo, setLoadingRepo] = useState(false);
   const [page, setPage] = useState(1);
-  const theme = useTheme();
 
   const getUserDetails = async () => {
     try {
@@ -84,9 +82,7 @@ const User = () => {
   const userRepoNotEmpty = userRepo.length !== 0;
 
   return (
-    <Box
-      sx={{ background: theme.palette.background.default, minHeight: "100vh" }}
-    >
+    <Box sx={{ minHeight: "100vh" }}>
       <Box
         sx={{
           display: "flex",
@@ -100,7 +96,6 @@ const User = () => {
           sx={{
             fontWeight: "700",
             marginTop: "0.5rem",
-            color: theme.palette.text.primary,
           }}
         >
           Search Github Users

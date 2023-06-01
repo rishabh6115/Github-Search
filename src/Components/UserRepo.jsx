@@ -14,7 +14,6 @@ const UserRepo = ({ userRepo, repoNum, changePage, page }) => {
   return (
     <Box
       sx={{
-        color: theme.palette.text.primary,
         display: "flex",
         alignItems: "center",
         flexDirection: "column",
@@ -30,7 +29,6 @@ const UserRepo = ({ userRepo, repoNum, changePage, page }) => {
       <Box
         sx={{
           display: "grid",
-          flexWrap: "wrap",
           gridTemplateColumns: [
             "repeat(1,minmax(300px ,1fr))",
             "repeat(2,minmax(300px ,1fr))",

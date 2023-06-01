@@ -2,7 +2,7 @@ import { useState } from "react";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import User from "./Components/User";
 import { Toaster } from "react-hot-toast";
-import { IconButton } from "@mui/material";
+import { CssBaseline, IconButton } from "@mui/material";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 
@@ -23,6 +23,7 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
+      <CssBaseline />
       <Toaster position="top-right" />
       <User />
       <IconButton

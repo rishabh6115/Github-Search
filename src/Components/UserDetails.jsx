@@ -28,7 +28,6 @@ const UserDetails = ({ userDetails }) => {
         display: ["column", "flex"],
         alignItems: "center",
         justifyContent: "center",
-        color: theme.palette.text.primary,
         borderRadius: "8px",
       }}
     >
